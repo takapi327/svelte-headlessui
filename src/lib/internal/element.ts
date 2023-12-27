@@ -12,12 +12,12 @@ const ELEMENTS = [
 	'h3',
 	'h4',
 	'h5',
-	'h6',
+	'h6'
 ] as const
 
-export type Elements = typeof ELEMENTS[number]
+export type Elements = (typeof ELEMENTS)[number]
 export type SupportedElements = Elements | SvelteComponent
 
 export const isValidElement = (element: SupportedElements): boolean => {
-  return !(typeof element === 'string' && !ELEMENTS.includes(element))
+	return !(typeof element === 'string' && !ELEMENTS.includes(element))
 }

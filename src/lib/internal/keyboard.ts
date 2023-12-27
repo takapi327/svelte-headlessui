@@ -16,5 +16,5 @@ export enum Keyboard {
 	PageUp = 'PageUp',
 	PageDown = 'PageDown',
 
-	Tab = 'Tab',
+	Tab = 'Tab'
 }
