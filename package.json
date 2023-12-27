@@ -9,6 +9,10 @@
 		"headless",
 		"sveltejs"
 	],
+	"engines": {
+		"pnpm": ">=7.0.0",
+		"node": ">=18.0.0"
+	},
 	"license": "MIT",
 	"scripts": {
 		"dev": "vite dev",
@@ -19,7 +23,9 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"prepare": "husky install",
+		"lint-staged": "lint-staged"
 	},
 	"exports": {
 		".": {
@@ -59,5 +65,16 @@
 	},
 	"svelte": "./dist/index.js",
 	"types": "./dist/index.d.ts",
-	"type": "module"
+	"type": "module",
+	"husky": {
+   "hooks": {
+	  		"pre-commit": "lint-staged"
+			}
+	},
+	"lint-staged": {
+		 "*.{ts,svelte}": [
+				  "npx prettier -w",
+				  "npx eslint --config .eslintrc.cjs --ignore-path .eslintignore"
+			]
+	}
 }
