@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Render from '@/internal/Render.svelte'
-	import { Dialog, DialogTitle, DialogOverlay } from '@/component/dialog'
+  import Render from '@/internal/Render.svelte'
+  import { Dialog, DialogTitle, DialogOverlay } from '@/component/dialog'
 
-	let isOpen = true
+  let isOpen = true
 </script>
 
 <h1>Welcome to your library project</h1>
@@ -10,22 +10,22 @@
 <p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
 
 <Render name="Div" tag="div" class="test" style="color: red">
-	<p>Rendered with a custom component</p>
+  <p>Rendered with a custom component</p>
 </Render>
 
 <p>Dialog open {isOpen}</p>
 
 {#if !isOpen}
-	<button type="button" on:click={() => (isOpen = true)}>Open Dialog</button>
+  <button type="button" on:click={() => (isOpen = true)}>Open Dialog</button>
 {/if}
 
 <Dialog open={isOpen} onclose={() => (isOpen = false)} class="test">
-	<DialogOverlay
-		style="position: fixed; top: 0; left: 0; background-color: rgb(0 0 0); opacity: 0.3; height: 100vh; width: 100vw;"
-	/>
+  <DialogOverlay
+    style="position: fixed; top: 0; left: 0; background-color: rgb(0 0 0); opacity: 0.3; height: 100vh; width: 100vw;"
+  />
 
-	<div
-		style="
+  <div
+    style="
 		  position: fixed;
 		  left: 50%;
 		  top: 50%;
@@ -35,10 +35,10 @@
 		  height: 120px;
 		  padding: 8px;
     border-radius: 8px;"
-	>
-		<DialogTitle>Dialog Title</DialogTitle>
+  >
+    <DialogTitle>Dialog Title</DialogTitle>
 
-		<button type="button" on:click={() => (isOpen = false)}>Deactivate</button>
-		<button type="button" on:click={() => (isOpen = false)}>Cancel</button>
-	</div>
+    <button type="button" on:click={() => (isOpen = false)}>Deactivate</button>
+    <button type="button" on:click={() => (isOpen = false)}>Cancel</button>
+  </div>
 </Dialog>
