@@ -6,17 +6,12 @@
 	let { tag = 'h2', children, ...restProps } = $props<{ tag: TaggedAs }>()
 
 	const dialogContext = useDialogContext('DialogTitle')
-	const id = dialogContext.titleId || `dialog-title-${ uniqueId() }`
+	const id = dialogContext.titleId || `dialog-title-${uniqueId()}`
 
 	const propsWeControl = $derived({ id })
 	const slotProps = $derived({ open: dialogContext.dialogState === DialogStates.Open })
 </script>
 
-<Render
-	name="DialogTitle"
-	{tag}
-	{...slotProps}
-	{...{ ...restProps, ...propsWeControl }}
->
+<Render name="DialogTitle" {tag} {...slotProps} {...{ ...restProps, ...propsWeControl }}>
 	{@render children()}
 </Render>

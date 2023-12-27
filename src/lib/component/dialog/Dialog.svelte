@@ -3,7 +3,7 @@
 
 	export enum DialogStates {
 		Open,
-		Closed,
+		Closed
 	}
 
 	export type DialogContext = {
@@ -16,9 +16,7 @@
 	const DIALOG_CONTEXT_NAME = 'dialog-context'
 	export const useDialogContext = (component: string): DialogContext => {
 		if (!hasContext(DIALOG_CONTEXT_NAME)) {
-			throw new Error(
-				`<${component} /> is missing a parent <Dialog /> component.`
-			)
+			throw new Error(`<${component} /> is missing a parent <Dialog /> component.`)
 		}
 		return getContext<DialogContext>(DIALOG_CONTEXT_NAME)
 	}
@@ -49,7 +47,7 @@
 			close: () => {
 				dialogState = DialogStates.Closed
 				onclose()
-			},
+			}
 		}
 	}
 
@@ -57,12 +55,12 @@
 	setContext<DialogContext>(DIALOG_CONTEXT_NAME, dialogContext)
 
 	const unique = uniqueId()
-	const id = `dialog-${ unique }`
-	const titleId = `dialog-title-${ unique }`
+	const id = `dialog-${unique}`
+	const titleId = `dialog-title-${unique}`
 
 	// Handle outside click
 	async function handleWindowMousedown(event: MouseEvent) {
-	  const target = event.target as HTMLElement
+		const target = event.target as HTMLElement
 
 		if (dialogContext.dialogState !== DialogStates.Open) return
 
@@ -89,7 +87,7 @@
 
 	const propsWeControl = $derived({
 		id,
-		role: 'dialog',
+		'role': 'dialog',
 		'aria-modal': dialogContext.dialogState === DialogStates.Open ? true : undefined,
 		'aria-labelledby': dialogContext.titleId
 	})
@@ -106,15 +104,12 @@
 		if (open) {
 			dialogContext.open(titleId)
 		} else {
-		  dialogContext.close()
+			dialogContext.close()
 		}
 	})
 </script>
 
-<svelte:window
-	onmousedown={handleWindowMousedown}
-	onkeydown={handleWindowKeydown}
-/>
+<svelte:window onmousedown={handleWindowMousedown} onkeydown={handleWindowKeydown} />
 <Render
 	name="Dialog"
 	tag="div"

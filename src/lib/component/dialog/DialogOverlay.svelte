@@ -5,7 +5,7 @@
 
 	let { tag = 'div', children, ...restProps } = $props<{ tag: TaggedAs }>()
 
-	const id = `dialog-overlay-${ uniqueId() }`
+	const id = `dialog-overlay-${uniqueId()}`
 	const dialogContext = useDialogContext('DialogOverlay')
 
 	function onclick(e: CustomEvent) {
@@ -20,7 +20,7 @@
 
 	const propsWeControl = $derived({
 		id,
-		'aria-hidden': true,
+		'aria-hidden': true
 	})
 
 	const slotProps = $derived({ open: dialogContext.dialogState === DialogStates.Open })
@@ -34,7 +34,7 @@
 	{visible}
 	{onclick}
 >
-	{#if (children)}
+	{#if children}
 		{@render children(slotProps)}
 	{/if}
 </Render>

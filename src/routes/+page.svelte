@@ -19,12 +19,10 @@
 	<button type="button" on:click={() => (isOpen = true)}>Open Dialog</button>
 {/if}
 
-<Dialog
-	open={isOpen}
-	onclose={ () => isOpen = false }
-	class="test"
->
-	<DialogOverlay style="position: fixed; top: 0; left: 0; background-color: rgb(0 0 0); opacity: 0.3; height: 100vh; width: 100vw;"/>
+<Dialog open={isOpen} onclose={() => (isOpen = false)} class="test">
+	<DialogOverlay
+		style="position: fixed; top: 0; left: 0; background-color: rgb(0 0 0); opacity: 0.3; height: 100vh; width: 100vw;"
+	/>
 
 	<div
 		style="
