@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-	import { tick } from 'svelte'
+	import { getContext, hasContext, setContext, tick } from 'svelte'
 
 	export enum DialogStates {
 		Open,
@@ -12,6 +12,24 @@
 		open: (id?: string) => void
 		close: () => void
 	}
+
+	const DIALOG_CONTEXT_NAME = 'dialog-context'
+	export const useDialogContext = (component: string): DialogContext => {
+		if (!hasContext(DIALOG_CONTEXT_NAME)) {
+			throw new Error(
+				`<${component} /> is missing a parent <Dialog /> component.`
+			)
+		}
+		return getContext<DialogContext>(DIALOG_CONTEXT_NAME)
+	}
+</script>
+
+<script lang="ts" generics="TSlotProps">
+	import Render from '@/internal/Render.svelte'
+	import { uniqueId } from '@/internal/unique-id'
+	import { Keyboard } from '@/internal/keyboard'
+
+	let { open, onclose, children, ...restProps } = $props<{ open: boolean }>()
 
 	const dialogContextState = (): DialogContext => {
 		let dialogState = $state<DialogStates>(DialogStates.Closed)
@@ -30,21 +48,17 @@
 			},
 			close: () => {
 				dialogState = DialogStates.Closed
+				onclose()
 			},
 		}
 	}
 
-	export const dialogContext = dialogContextState()
-</script>
+	const dialogContext = dialogContextState()
+	setContext<DialogContext>(DIALOG_CONTEXT_NAME, dialogContext)
 
-<script lang="ts" generics="TSlotProps">
-	import Render from '@/internal/Render.svelte'
-	import { uniqueId } from '@/internal/unique-id'
-	import { Keyboard } from '@/internal/keyboard'
-
-	let { open, onclose, children, ...restProps } = $props<{ open: boolean }>()
-
-	const id = `dialog-${ uniqueId() }`
+	const unique = uniqueId()
+	const id = `dialog-${ unique }`
+	const titleId = `dialog-title-${ unique }`
 
 	// Handle outside click
 	async function handleWindowMousedown(event: MouseEvent) {
@@ -53,7 +67,6 @@
 		if (dialogContext.dialogState !== DialogStates.Open) return
 
 		dialogContext.close()
-		onclose()
 		await tick()
 		target?.focus()
 	}
@@ -65,11 +78,9 @@
 		event.preventDefault()
 		event.stopPropagation()
 		dialogContext.close()
-		onclose()
 	}
 
-	function onclick(e: CustomEvent) {
-		console.log('Element was clicked')
+	function handleClick(e: CustomEvent) {
 		const event = e as never as MouseEvent
 		event.stopPropagation()
 	}
@@ -93,17 +104,16 @@
 		}
 
 		if (open) {
-			dialogContext.open(id)
+			dialogContext.open(titleId)
 		} else {
 		  dialogContext.close()
-			onclose()
 		}
 	})
 </script>
 
 <svelte:window
-	onMousedown={handleWindowMousedown}
-	onKeydown={handleWindowKeydown}
+	onmousedown={handleWindowMousedown}
+	onkeydown={handleWindowKeydown}
 />
 <Render
 	name="Dialog"
@@ -111,7 +121,7 @@
 	{...{ ...restProps, ...slotProps, ...propsWeControl }}
 	{...$$slots}
 	{visible}
-	{onclick}
+	onmousedown={handleClick}
 >
-	{@render children(slotProps)}
+	{@render children()}
 </Render>

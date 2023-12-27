@@ -1,10 +1,11 @@
 <script lang="ts" generics="TaggedAs extends SupportedElements">
 	import Render from '@/internal/Render.svelte'
-	import { dialogContext, DialogStates } from './Dialog.svelte'
+	import { DialogStates, useDialogContext } from './Dialog.svelte'
 	import { uniqueId } from '@/internal/unique-id'
 
 	let { tag = 'h2', children, ...restProps } = $props<{ tag: TaggedAs }>()
 
+	const dialogContext = useDialogContext('DialogTitle')
 	const id = dialogContext.titleId || `dialog-title-${ uniqueId() }`
 
 	const propsWeControl = $derived({ id })
@@ -17,5 +18,5 @@
 	{...slotProps}
 	{...{ ...restProps, ...propsWeControl }}
 >
-	{@render children(slotProps)}
+	{@render children()}
 </Render>

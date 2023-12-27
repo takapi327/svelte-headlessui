@@ -19,15 +19,19 @@
 	<button on:click={() => (isOpen = true)}>Open Dialog</button>
 {/if}
 
-<DialogOverlay style="position: fixed; top: 0; left: 0; background-color: rgb(0 0 0); opacity: 0.3; height: 100vh; width: 100vw;"/>
 <Dialog
 	open={isOpen}
 	onclose={ () => isOpen = false }
 	class="test"
-	style="position: fixed; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%); background-color: white; width: 400px; height: 120px; padding: 8px; border-radius: 8px;"
 >
+	<DialogOverlay style="position: fixed; top: 0; left: 0; background-color: rgb(0 0 0); opacity: 0.3; height: 100vh; width: 100vw;"/>
 
-	<DialogTitle>Dialog Title</DialogTitle>
-	<button on:click={() => (isOpen = false)}>Deactivate</button>
-	<button on:click={() => (isOpen = false)}>Cancel</button>
+	<div
+		style="position: fixed; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%); background-color: white; width: 400px; height: 120px; padding: 8px; border-radius: 8px;"
+	>
+		<DialogTitle>Dialog Title</DialogTitle>
+
+		<button on:click={() => (isOpen = false)}>Deactivate</button>
+		<button on:click={() => (isOpen = false)}>Cancel</button>
+	</div>
 </Dialog>

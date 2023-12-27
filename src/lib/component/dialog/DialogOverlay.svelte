@@ -1,11 +1,12 @@
 <script lang="ts" generics="TSlotProps, TaggedAs extends SupportedElements">
 	import Render from '@/internal/Render.svelte'
-	import { dialogContext, DialogStates } from './Dialog.svelte'
+	import { DialogStates, useDialogContext } from './Dialog.svelte'
 	import { uniqueId } from '@/internal/unique-id'
 
 	let { tag = 'div', children, ...restProps } = $props<{ tag: TaggedAs }>()
 
 	const id = `dialog-overlay-${ uniqueId() }`
+	const dialogContext = useDialogContext('DialogOverlay')
 
 	function onclick(e: CustomEvent) {
 		let event = e as never as MouseEvent
