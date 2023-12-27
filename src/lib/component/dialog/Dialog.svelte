@@ -43,10 +43,12 @@
       open: (id?: string) => {
         titleId = id
         dialogState = DialogStates.Open
+        scrollLock()
       },
       close: () => {
         dialogState = DialogStates.Closed
         onclose()
+        scrollUnlock()
       }
     }
   }
@@ -81,6 +83,21 @@
   function handleClick(e: CustomEvent) {
     const event = e as never as MouseEvent
     event.stopPropagation()
+  }
+
+  const scrollLock = () => {
+    if (dialogContext.dialogState !== DialogStates.Open) return
+    const html = document.documentElement
+    const scrollbarWidth = window.innerWidth - html.clientWidth
+    html.style.overflow = 'hidden'
+    html.style.paddingRight = `${scrollbarWidth}px`
+  }
+
+  const scrollUnlock = () => {
+    if (dialogContext.dialogState !== DialogStates.Closed) return
+    const html = document.documentElement
+    html.style.overflow = ''
+    html.style.paddingRight = ''
   }
 
   const visible = $derived<boolean>(dialogContext.dialogState === DialogStates.Open)
