@@ -1,7 +1,7 @@
 <svelte:options runes={true} />
 
 <script lang="ts" generics="TaggedAs extends SupportedElements">
-  import { isValidElement, type SupportedElements } from './element'
+  import { isValidElement, type SupportedElements } from '@/internal/element'
 
   let {
     name,

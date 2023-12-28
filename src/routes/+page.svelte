@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Render from '@/internal/Render.svelte'
+  import Render from '@/component/Render.svelte'
   import { Dialog, DialogTitle, DialogOverlay } from '@/component/dialog'
 
   let isOpen = true

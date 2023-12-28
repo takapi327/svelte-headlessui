@@ -1,5 +1,5 @@
 <script lang="ts" generics="TaggedAs extends SupportedElements">
-  import Render from '@/internal/Render.svelte'
+  import Render from '@/component/Render.svelte'
   import { DialogStates, useDialogContext } from './Dialog.svelte'
   import { uniqueId } from '@/internal/unique-id'
 
