@@ -22,7 +22,7 @@
   }
 </script>
 
-<script lang="ts" generics="TSlotProps">
+<script lang="ts">
   import Render from '@/component/Render.svelte'
   import { uniqueId } from '@/internal/unique-id'
   import { Keyboard } from '@/internal/keyboard'
